@@ -26,7 +26,7 @@ app.use(logger('dev'));
 const private_users = require('./api/routes/private/users');
 
 //register router public
-// const public_auth = require('./api/routes/public/auth');
+const public_auth = require('./api/routes/public/auth');
 
 // private route
 app.use('/private/users',validateUser, private_users);
