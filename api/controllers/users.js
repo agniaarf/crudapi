@@ -1,5 +1,6 @@
-const userModel = require('../models/users');
+// const userModel = require('../models/users');
 const jwt = require('jsonwebtoken');
+var connection = require('../../config/database');
 
 const multer = require("multer");
 // Upload Image
@@ -16,88 +17,92 @@ const upload = multer({
 }).single("photo");
 
 module.exports.get_all = function(req,res,next){
-   userModel.find({},function(err,result){
-      if(err)
-         next(err);
-      else
-          res.json(result);
-   })
+   connection.query('SELECT * FROM users', function (error, rows, fields){
+      if(error){
+          console.log(error)
+      } else{
+         return res.json({
+            result: rows,
+            message: "Fetch data successfully"
+        });
+      }
+  });
 }
 
-module.exports.read_data = function(req,res,next){
-   userModel.findOne({_id:req.body._id},function(err,result){
-      if(err)
-         next(err);
-      else
-         res.json(result);
-   })
-}
+// module.exports.read_data = function(req,res,next){
+//    userModel.findOne({_id:req.body._id},function(err,result){
+//       if(err)
+//          next(err);
+//       else
+//          res.json(result);
+//    })
+// }
 
-module.exports.create_data = function(req,res,next){
-   upload(req, res, err => {
-      var new_data = req.body;
+// module.exports.create_data = function(req,res,next){
+//    upload(req, res, err => {
+//       var new_data = req.body;
   
-      if (req.file != null) {
-         new_data.photo = req.file.filename
-      }
-      var new_data_user = new userModel(new_data);
-      if (err) {
-         next(err);
-      } else {
-         new_data_user.save(function(err, result) {
-            if (err) 
-               next(err);
-            else
-               res.json({status: "success", message: "User added successfully!!!", data: result});
-         });
-      }
-    });
+//       if (req.file != null) {
+//          new_data.photo = req.file.filename
+//       }
+//       var new_data_user = new userModel(new_data);
+//       if (err) {
+//          next(err);
+//       } else {
+//          new_data_user.save(function(err, result) {
+//             if (err) 
+//                next(err);
+//             else
+//                res.json({status: "success", message: "User added successfully!!!", data: result});
+//          });
+//       }
+//     });
    
-}
+// }
 
 
 
-exports.read_data = function(req, res, next) {
-   userModel.find({_id:req.params._id}, function(err, data) {
-       if (err){
-           next(err);}
-       else{
-           res.json(data);
-       }
-   });
-};
+// exports.read_data = function(req, res, next) {
+//    userModel.find({_id:req.params._id}, function(err, data) {
+//        if (err){
+//            next(err);}
+//        else{
+//            res.json(data);
+//        }
+//    });
+// };
 
 
-exports.update_data = function(req, res, next) {
-   upload(req, res, err => {
-      var new_data = req.body;
+// exports.update_data = function(req, res, next) {
+//    upload(req, res, err => {
+//       var new_data = req.body;
   
-      if (req.file != null) {
-        new_data.photo = req.file.filename
-      }
-      if (err) {
-         next(err);
-      } else {
-         userModel.findOneAndUpdate({_id: req.params._id}, new_data, {new: true}, function(err, data) {
-            if (err){
-               next(err);}
-            else{
-               res.json(data);
-            }
-         });
-      }
-    });
-};
+//       if (req.file != null) {
+//         new_data.photo = req.file.filename
+//       }
+//       if (err) {
+//          next(err);
+//       } else {
+//          userModel.findOneAndUpdate({_id: req.params._id}, new_data, {new: true}, function(err, data) {
+//             if (err){
+//                next(err);}
+//             else{
+//                res.json(data);
+//             }
+//          });
+//       }
+//     });
+// };
 
-exports.delete_data = function(req, res, next) {
-   userModel.remove({
-       _id: req.params._id
-   }, function(err, data) {
-       if (err){
-           next(err);}
-       else{
-           res.json({ message: 'successfully deleted', data : data });
-       }
-   });
-};
+// exports.delete_data = function(req, res, next) {
+//    userModel.remove({
+//        _id: req.params._id
+//    }, function(err, data) {
+//        if (err){
+//            next(err);}
+//        else{
+//            res.json({ message: 'successfully deleted', data : data });
+//        }
+//    });
+// };
 

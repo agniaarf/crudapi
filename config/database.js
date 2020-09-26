@@ -1,8 +1,14 @@
-//Set up db connect
-//mongoURI:'mongodb://192.168.10.3:27017/bemftubj', --> db collocation
+var mysql = require('mysql');
 
-module.exports = {
-    mongoURI:'mongodb://localhost/bemftubj',
-    secretOrKey: "nahdude"
-  };
-  
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "Qwertyuasd123",
+  database: "todolistdb"
+});
+
+con.connect(function (err){
+    if(err) throw err;
+});
+
+module.exports = con;
