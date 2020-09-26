@@ -17,7 +17,7 @@ const upload = multer({
 }).single("photo");
 
 module.exports.get_all = function(req,res,next){
-   connection.query('SELECT * FROM users', function (error, rows, fields){
+   connection.query(`SELECT * FROM users ${req.query.id ? "WHERE id="+req.query.id : ""}`, function (error, rows, fields){
       if(error){
           console.log(error)
       } else{
