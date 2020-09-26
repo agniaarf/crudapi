@@ -5,9 +5,9 @@ var connection = require('../../config/database');
 const multer = require("multer");
 // Upload Image
 const storage = multer.diskStorage({
-    destination: "./repo",
+    destination: "./repo/images/",
     filename: function(req, file, cb) {
-      cb(null, "BEMFTUBJUSERPHOTO" + file.originalname);
+      cb(null, "photo-user-" + Date.now() + ".jpg");
     }
   });
   
@@ -37,28 +37,63 @@ module.exports.get_all = function(req,res,next){
 //          res.json(result);
 //    })
 // }
+module.exports.create_data = function(req,res,next){
+   upload(req, res, err => {
 
-// module.exports.create_data = function(req,res,next){
-//    upload(req, res, err => {
-//       var new_data = req.body;
-  
-//       if (req.file != null) {
-//          new_data.photo = req.file.filename
-//       }
-//       var new_data_user = new userModel(new_data);
-//       if (err) {
-//          next(err);
-//       } else {
-//          new_data_user.save(function(err, result) {
-//             if (err) 
-//                next(err);
-//             else
-//                res.json({status: "success", message: "User added successfully!!!", data: result});
-//          });
-//       }
-//     });
+      if (err) {
+         next(err);
+      } else {
+         connection.query(`INSERT INTO users ( id , name , email , userid , password , gender , phone , photo , role  ) 
+         VALUES (
+            '${req.body.id}',
+            '${req.body.name}',
+            '${req.body.email}',
+            '${req.body.userid}',
+            '${req.body.password}',
+            '${req.body.gender}',
+            '${req.body.phone}',
+            '${req.file ? req.file.filename : ""}',
+            'admin'
+         )`
+       ,function(err, result) {
+            if (err) 
+               next(err);
+            else
+               res.json({status: "success", message: "User added successfully!!!", data: result});
+         });
+      }
+    });
    
-// }
+}
+
+module.exports.update_data = function(req,res,next){
+   upload(req, res, err => {
+
+      if (err) {
+         next(err);
+      } else {
+
+         connection.query(`UPDATE users SET 
+         name = '${req.body.name}',
+         email = '${req.body.email}',
+         userid = '${req.body.userid}',
+         password = '${req.body.password}',
+         gender = '${req.body.gender}',
+         phone = '${req.body.phone}',
+         photo = '${req.file ? req.file.filename : req.body.photo}',
+         role = 'admin'
+         WHERE id='${req.params.id}'
+         `
+       ,function(err, result) {
+            if (err) 
+               next(err);
+            else
+               res.json({status: "success", message: "User added successfully!!!", data: result});
+         });
+      }
+    });
+   
+}
 
 
 
@@ -73,36 +108,14 @@ module.exports.get_all = function(req,res,next){
 // };
 
 
-// exports.update_data = function(req, res, next) {
-//    upload(req, res, err => {
-//       var new_data = req.body;
-  
-//       if (req.file != null) {
-//         new_data.photo = req.file.filename
-//       }
-//       if (err) {
-//          next(err);
-//       } else {
-//          userModel.findOneAndUpdate({_id: req.params._id}, new_data, {new: true}, function(err, data) {
-//             if (err){
-//                next(err);}
-//             else{
-//                res.json(data);
-//             }
-//          });
-//       }
-//     });
-// };
 
-// exports.delete_data = function(req, res, next) {
-//    userModel.remove({
-//        _id: req.params._id
-//    }, function(err, data) {
-//        if (err){
-//            next(err);}
-//        else{
-//            res.json({ message: 'successfully deleted', data : data });
-//        }
-//    });
-// };
+exports.delete_data = function(req, res, next) {
+   connection.query(`DELETE FROM users WHERE id='${req.params.id}'`,function(err, data) {
+       if (err){
+           next(err);}
+       else{
+           res.json({ message: 'successfully deleted', data : data });
+       }
+   });
+};
 
