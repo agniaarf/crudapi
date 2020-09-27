@@ -60,5 +60,5 @@ server_http.listen(port_http, ()=>{
 //ini adalah endpoint yg memriksa client terhubung dengan server atau tidak
 app.get('/', function (req, res) { 
   // console.log('someone is checking')  
-  res.send('OK Server BEM FT UBHARA is Running')
+  res.send('OK Server is Running')
 })
