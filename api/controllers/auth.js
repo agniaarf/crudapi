@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports.authenticate = function(req,res,next){
     // console.log("req.body.userid",req.body.userid)
-    connection.query(`SELECT * FROM users WHERE userid='${req.body.userid}'`, function(err, userInfo){
+    connection.query(`SELECT * FROM public.users WHERE userid='${req.body.userid}'`, function(err, userInfo){
         // console.log("userinfo",userInfo)
        if (err) {
           next(err);

@@ -52,19 +52,21 @@ function validateUser(req, res, next) {
   });
 }
 
-// var server_http = require('http').createServer(app);
+var server_http = require('http').createServer(app);
 
 
 
-const server = http.createServer((request, response) => {
-  // You pass two more arguments for config and middleware
-  // More details here: https://github.com/vercel/serve-handler#options
-  return handler(request, response);
-})
+// const server = http.createServer((request, response) => {
+//   // You pass two more arguments for config and middleware
+//   // More details here: https://github.com/vercel/serve-handler#options
+//   return handler(request, response);
+// })
 
-const port_http = process.env.PORT || 8080;
+const port_http = process.env.PORT || 3000;
 
-server.listen(port_http, ()=>{
+
+
+server_http.listen(port_http, ()=>{
   console.log(`Http Server running on port ${port_http}`);
 })
 //ini adalah endpoint yg memriksa client terhubung dengan server atau tidak

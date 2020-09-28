@@ -1,4 +1,4 @@
-// const userModel = require('../models/users');
+// const userModel = require('../models/public.users');
 const jwt = require('jsonwebtoken');
 var connection = require('../../config/database');
 
@@ -17,12 +17,12 @@ const upload = multer({
 }).single("photo");
 
 module.exports.get_all = function(req,res,next){
-   connection.query(`SELECT * FROM users ${req.query.id ? "WHERE id="+req.query.id : ""}`, function (error, rows, fields){
+   connection.query(`SELECT * FROM public.users ${req.query.id ? "WHERE id="+req.query.id : ""}`, function (error, result, fields){
       if(error){
           console.log(error)
       } else{
          return res.json({
-            result: rows,
+            result: result.rows,
             message: "Fetch data successfully"
         });
       }
@@ -43,7 +43,7 @@ module.exports.create_data = function(req,res,next){
       if (err) {
          next(err);
       } else {
-         connection.query(`INSERT INTO users ( id , name , email , userid , password , gender , phone , photo , role  ) 
+         connection.query(`INSERT INTO public.users ( id , name , email , userid , password , gender , phone , photo , role  ) 
          VALUES (
             '${req.body.id}',
             '${req.body.name}',
@@ -73,7 +73,7 @@ module.exports.update_data = function(req,res,next){
          next(err);
       } else {
 
-         connection.query(`UPDATE users SET 
+         connection.query(`UPDATE public.users SET 
          name = '${req.body.name}',
          email = '${req.body.email}',
          userid = '${req.body.userid}',
@@ -110,7 +110,7 @@ module.exports.update_data = function(req,res,next){
 
 
 exports.delete_data = function(req, res, next) {
-   connection.query(`DELETE FROM users WHERE id='${req.params.id}'`,function(err, data) {
+   connection.query(`DELETE FROM public.users WHERE id='${req.params.id}'`,function(err, data) {
        if (err){
            next(err);}
        else{
