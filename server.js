@@ -52,7 +52,7 @@ function validateUser(req, res, next) {
 
 var server_http = require('http').createServer(app);
 
-const port_http = process.env.PORT || 4300;
+const port_http = process.env.PORT || 3000;
 
 server_http.listen(port_http, ()=>{
   console.log(`Http Server running on port ${port_http}`);
