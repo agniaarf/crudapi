@@ -5,6 +5,8 @@ const path = require('path');
 const cors = require('cors');
 var jwt = require('jsonwebtoken');
 const app = express();
+const handler = require('serve-handler');
+const http = require('http');
 
 // Body parser middleware
 app.use(cors())
@@ -50,11 +52,19 @@ function validateUser(req, res, next) {
   });
 }
 
-var server_http = require('http').createServer(app);
+// var server_http = require('http').createServer(app);
+
+
+
+const server = http.createServer((request, response) => {
+  // You pass two more arguments for config and middleware
+  // More details here: https://github.com/vercel/serve-handler#options
+  return handler(request, response);
+})
 
 const port_http = process.env.PORT || 8080;
 
-server_http.listen(port_http, ()=>{
+server.listen(port_http, ()=>{
   console.log(`Http Server running on port ${port_http}`);
 })
 //ini adalah endpoint yg memriksa client terhubung dengan server atau tidak
