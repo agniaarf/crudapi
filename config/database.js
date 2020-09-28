@@ -1,19 +1,12 @@
-var mysql = require('mysql');
+const { Client } = require('pg');
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Qwertyuasd123",
-  database: "todolistdb"
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
-con.connect(function (err){
-    if(err){ 
-      throw err
-    }
-    else{
-      console.log("Database Connected")
-    };
-});
+client.connect();
 
-module.exports = con;
+module.exports = client;

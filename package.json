@@ -1,5 +1,5 @@
 {
-  "name": "efrm",
+  "name": "todolistserver",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -35,6 +35,7 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "path": "^0.12.7",
+    "pg": "^8.3.3",
     "rootpath": "^0.1.2",
     "serve": "^11.3.2",
     "serve-handler": "^6.1.3",

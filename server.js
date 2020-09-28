@@ -30,8 +30,8 @@ const private_users = require('./api/routes/private/users');
 //register router public
 const public_auth = require('./api/routes/public/auth');
 
-// private route
-app.use('/private/users',validateUser, private_users);
+// private route /validateUser
+app.use('/private/users', private_users);
 
 // public route
 app.use('/auth', public_auth);
