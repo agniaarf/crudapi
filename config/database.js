@@ -1,12 +1,7 @@
-const { Client } = require('pg');
+//Set up db connect
+//mongoURI:'mongodb://192.168.10.3:27017/bemftubj', --> db collocation
 
-const client = new Client({
-  connectionString: "postgres://zikiahnxjkjcpc:008c0a2e79abbbaf3ccb8043b96ec82a4a566598831e8e66db6f608fe75095c0@ec2-52-72-34-184.compute-1.amazonaws.com:5432/d717g3edne088o",
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
-
-client.connect();
-
-module.exports = client;
+module.exports = {
+  mongoURI:'mongodb://localhost/todolistdb',
+  secretOrKey: "nahdude"
+};

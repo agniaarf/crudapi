@@ -5,9 +5,11 @@ const path = require('path');
 const cors = require('cors');
 var jwt = require('jsonwebtoken');
 const app = express();
+const mongoose = require('mongoose')
 const handler = require('serve-handler');
 const http = require('http');
 
+const db = require("./config/database").mongoURI;
 // Body parser middleware
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,6 +22,14 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
+});
+
+mongoose.connect(db, { useNewUrlParser: true,useFindAndModify: false,useUnifiedTopology: true })
+  .then(() => {
+    console.log("MongoDB Connected");
+  })
+  .catch(err => {
+    console.log(err);
 });
 
 app.use(logger('dev'));
