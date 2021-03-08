@@ -70,24 +70,25 @@ exports.read_data = function(req, res, next) {
 
 
 exports.update_data = function(req, res, next) {
-   upload(req, res, err => {
-      var new_data = req.body;
+   // // upload(req, res, err => {
+   //    var new_data = req.body;
   
-      if (req.file != null) {
-        new_data.photo = req.file.filename
-      }
-      if (err) {
-         next(err);
-      } else {
-         userModel.findOneAndUpdate({_id: req.params._id}, new_data, {new: true}, function(err, data) {
+   //    // if (req.file != null) {
+   //    //   new_data.photo = req.file.filename
+   //    // }
+   //    // if (err) {
+   //    //    next(err);
+   //    // } else {
+         userModel.findOneAndUpdate({_id: req.params._id}, req.body, {new: true}, function(err, data) {
             if (err){
-               next(err);}
+               next(err);
+               }
             else{
                res.json(data);
             }
          });
-      }
-    });
+      // }
+   //  });
 };
 
 exports.delete_data = function(req, res, next) {
