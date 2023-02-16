@@ -23,8 +23,13 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-
-mongoose.connect(db, { useNewUrlParser: true,useFindAndModify: false,useUnifiedTopology: true })
+console.log(db)
+mongoose.set('strictQuery', true)
+mongoose.connect(
+  db,
+  { useNewUrlParser: true,
+    useUnifiedTopology: true }
+)
   .then(() => {
     console.log("MongoDB Connected");
   })
@@ -35,34 +40,34 @@ mongoose.connect(db, { useNewUrlParser: true,useFindAndModify: false,useUnifiedT
 app.use(logger('dev'));
 
 // register route private
-const private_users = require('./api/routes/private/users');
-const public_users = require('./api/routes/public/users');
+// const private_users = require('./api/routes/private/users');
+const kategori_router = require('./api/routes/kategori');
 
 //register router public
-const public_auth = require('./api/routes/public/auth');
+// const public_auth = require('./api/routes/public/auth');
 
 // private route /validateUser
 
-app.use('/private/users',validateUser, private_users);
-app.use('/users', public_users);
+// app.use('/private/users',validateUser, private_users);
+app.use('/kategori', kategori_router);
 
 // public route
-app.use('/auth', public_auth);
+// app.use('/auth', public_auth);
 //repo image
-app.use("/repo", express.static(path.join(__dirname, 'repo')));
+// app.use("/repo", express.static(path.join(__dirname, 'repo')));
 
 // validate user jwt
-function validateUser(req, res, next) { 
-  jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function(err, decoded) {
-    if (err) {
-      res.status(401).send({status:"error", message: "Sorry you aren't allowed to access this API ^_^", data:null});
-    }
-    else {
-      req.body.userId = decoded.id;
-      next();
-    }
-  });
-}
+// function validateUser(req, res, next) { 
+//   jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function(err, decoded) {
+//     if (err) {
+//       res.status(401).send({status:"error", message: "Sorry you aren't allowed to access this API ^_^", data:null});
+//     }
+//     else {
+//       req.body.userId = decoded.id;
+//       next();
+//     }
+//   });
+// }
 
 
 
@@ -76,7 +81,7 @@ var server_http = require('http').createServer(app);
 //   return handler(request, response);
 // })
 
-const port_http = process.env.PORT || 3000;
+const port_http = process.env.PORT || 3005;
 
 
 

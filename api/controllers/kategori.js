@@ -1,4 +1,4 @@
-const userModel = require('../models/users');
+const kategoriModel = require('../models/kategori');
 const jwt = require('jsonwebtoken');
 // var connection = require('../../config/database');
 
@@ -17,16 +17,17 @@ const upload = multer({
 }).single("photo");
 
 module.exports.get_all = function(req,res,next){
-   userModel.find({},function(err,result){
+   kategoriModel.find({},function(err,result){
+      console.log('result',result)
       if(err)
-         next(err);
+         next( err)
       else
           res.json(result);
    })
 }
 
 module.exports.read_data = function(req,res,next){
-   userModel.findOne({_id:req.body._id},function(err,result){
+   kategoriModel.findOne({_id:req.body._id},function(err,result){
       if(err)
          next(err);
       else
@@ -41,7 +42,7 @@ module.exports.create_data = function(req,res,next){
       if (req.file != null) {
          new_data.photo = req.file.filename
       }
-      var new_data_user = new userModel(new_data);
+      var new_data_user = new kategoriModel(new_data);
       if (err) {
          next(err);
       } else {
@@ -59,7 +60,7 @@ module.exports.create_data = function(req,res,next){
 
 
 exports.read_data = function(req, res, next) {
-   userModel.find({_id:req.params._id}, function(err, data) {
+   kategoriModel.find({_id:req.params._id}, function(err, data) {
        if (err){
            next(err);}
        else{
@@ -79,7 +80,7 @@ exports.update_data = function(req, res, next) {
    //    // if (err) {
    //    //    next(err);
    //    // } else {
-         userModel.findOneAndUpdate({_id: req.params._id}, req.body, {new: true}, function(err, data) {
+         kategoriModel.findOneAndUpdate({_id: req.params._id}, req.body, {new: true}, function(err, data) {
             if (err){
                next(err);
                }
@@ -92,7 +93,7 @@ exports.update_data = function(req, res, next) {
 };
 
 exports.delete_data = function(req, res, next) {
-   userModel.remove({
+   kategoriModel.delete({
        _id: req.params._id
    }, function(err, data) {
        if (err){
