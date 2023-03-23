@@ -93,7 +93,7 @@ exports.update_data = function(req, res, next) {
 };
 
 exports.delete_data = function(req, res, next) {
-   kategoriModel.delete({
+   kategoriModel.deleteOne({
        _id: req.params._id
    }, function(err, data) {
        if (err){

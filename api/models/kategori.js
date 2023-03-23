@@ -6,8 +6,8 @@ const Schema = mongoose.Schema;
 const kategoriSchema = 
     new Schema(
         {
-            namaBarang: String,
-            kodeBarang: Number,  
+            nama_barang: String,
+            kode_barang: Number,  
         },
         {timestamps: true }
     );
