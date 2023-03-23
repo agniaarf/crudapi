@@ -1,7 +1,5 @@
-//Set up db connect
-//mongoURI:'mongodb://192.168.10.3:27017/bemftubj', --> db collocation
 
 module.exports = {
-  mongoURI:'mongodb://localhost/inventory',
+  mongoURI:'mongodb://127.0.0.1:27017/inventory',
   secretOrKey: "nahdude"
 };

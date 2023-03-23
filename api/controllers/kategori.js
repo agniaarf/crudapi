@@ -18,11 +18,11 @@ const upload = multer({
 
 module.exports.get_all = function(req,res,next){
    kategoriModel.find({},function(err,result){
-      console.log('result',result)
       if(err)
-         next( err)
-      else
-          res.json(result);
+         next(err)
+      else {
+         res.json(result);
+      }
    })
 }
 
